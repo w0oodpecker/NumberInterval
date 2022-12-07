@@ -38,13 +38,11 @@ public class Main {
             threads.add(new Thread(logic)); //Добавляем поток в список
             threads.get(threads.size() - 1).start(); //Запускаем последний из списка поток
         }
-        boolean switcher = true;
-        while (switcher == true) { //Проверяем тут завершились ли потоки
-            switcher = false;
-            for (int i = 0; i < threads.size() - 1; i++) {
-                switcher |= threads.get(i).isAlive();
-            }
+
+        for (Thread thread : threads) {
+            thread.join(); // зависаем, ждём когда поток объект которого лежит в thread завершится
         }
+
         long endTs = System.currentTimeMillis(); // end time
         System.out.println("Time: " + (endTs - startTs) + "ms");
     }
